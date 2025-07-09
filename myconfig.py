@@ -12,7 +12,7 @@
 #
 # #PATHS
 # CAR_PATH = PACKAGE_PATH = os.path.dirname(os.path.realpath(__file__))
-# DATA_PATH = os.path.join(CAR_PATH, 'data')
+DATA_PATH = "./data"
 # MODELS_PATH = os.path.join(CAR_PATH, 'models')
 #
 # #VEHICLE
@@ -94,7 +94,7 @@ DRIVE_TRAIN_TYPE = "I2C_SERVO"
 # #
 STEERING_CHANNEL = 1            #(deprecated) channel on the 9685 pwm board 0-15
 STEERING_LEFT_PWM = 500         #pwm value for full left steering
-STEERING_RIGHT_PWM = 300        #pwm value for full right steering
+STEERING_RIGHT_PWM = 308        #pwm value for full right steering
 THROTTLE_CHANNEL = 0            #(deprecated) channel on the 9685 pwm board 0-15
 THROTTLE_FORWARD_PWM = 380      #pwm value for max forward throttle
 THROTTLE_STOPPED_PWM = 345      #pwm value for no movement
@@ -374,7 +374,7 @@ THROTTLE_REVERSE_PWM = 310      #pwm value for max reverse throttle
 # PRINT_MODEL_SUMMARY = True      #print layers and weights to stdout
 # OPTIMIZER = None                #adam, sgd, rmsprop, etc.. None accepts default
 # LEARNING_RATE = 0.001           #only used when OPTIMIZER specified
-# LEARNING_RATE_DECAY = 0.0       #only used when OPTIMIZER specified
+#LEARNING_RATE_DECAY = 0.95       #only used when OPTIMIZER specified
 # SEND_BEST_MODEL_TO_PI = False   #change to true to automatically send best model during training
 # CREATE_TF_LITE = True           # automatically create tflite model in training
 # CREATE_TENSOR_RT = False        # automatically create tensorrt model in training
@@ -477,9 +477,9 @@ THROTTLE_REVERSE_PWM = 310      #pwm value for max reverse throttle
 # #           return self.blur.run(image)
 # #   ```
 # #
-# AUGMENTATIONS = []         # changes to image only applied in training to create
+AUGMENTATIONS = []     # changes to image only applied in training to create
 #                            # more variety in the data.
-# TRANSFORMATIONS = []       # changes applied _before_ training augmentations,
+TRANSFORMATIONS = []       # changes applied _before_ training augmentations,
 #                            # such that augmentations are applied to the transformed image,
 # POST_TRANSFORMATIONS = []  # transformations applied _after_ training augmentations,
 #                            # such that changes are applied to the augmented image
@@ -555,19 +555,17 @@ THROTTLE_REVERSE_PWM = 310      #pwm value for max reverse throttle
 # WEB_INIT_MODE = "user"              # which control mode to start in. one of user|local_angle|local. Setting local will start in ai mode.
 #
 # #JOYSTICK
-USE_JOYSTICK_AS_DEFAULT = True      #when starting the manage.py, when True, will not require a --js option to use the joystick
-JOYSTICK_MAX_THROTTLE = 0.95        #this scalar is multiplied with the -1 to 1 throttle value to limit the maximum throttle. This can help if you drop the controller or just don't need the full speed available.
-JOYSTICK_STEERING_SCALE = 1.25      #some people want a steering that is less sensitve. This scalar is multiplied with the steering -1 to 1. It can be negative to reverse dir.
+#USE_JOYSTICK_AS_DEFAULT = False      #when starting the manage.py, when True, will not require a --js option to use the joystick
+#JOYSTICK_MAX_THROTTLE = 1.0         #this scalar is multiplied with the -1 to 1 throttle value to limit the maximum throttle. This can help if you drop the controller or just don't need the full speed available.
+#JOYSTICK_STEERING_SCALE = 1.2       #some people want a steering that is less sensitve. This scalar is multiplied with the steering -1 to 1. It can be negative to reverse dir.
 # AUTO_RECORD_ON_THROTTLE = True      #if true, we will record whenever throttle is not zero. if false, you must manually toggle recording with some other trigger. Usually circle button on joystick.
-CONTROLLER_TYPE = 'xbox'            #(ps3|ps4|xbox|pigpio_rc|nimbus|wiiu|F710|rc3|MM1|custom) custom will run the my_joystick.py controller written by the `donkey createjs` command
-JOYSTICK_THROTTLE_AXIS = 4
-JOYSTICK_STEERING_AXIS = 0
+#CONTROLLER_TYPE = 'xbox'            #(ps3|ps4|xbox|pigpio_rc|nimbus|wiiu|F710|rc3|MM1|custom) custom will run the my_joystick.py controller written by the `donkey createjs` command
 # USE_NETWORKED_JS = False            #should we listen for remote joystick control over the network?
 # NETWORK_JS_SERVER_IP = None         #when listening for network joystick control, which ip is serving this information
-JOYSTICK_DEADZONE = 0.05            # when non zero, this is the smallest throttle before recording triggered.
-JOYSTICK_THROTTLE_DIR = 1.0         # use -1.0 to flip forward/backward, use 1.0 to use joystick's natural forward/backward
+#JOYSTICK_DEADZONE = 0.05            # when non zero, this is the smallest throttle before recording triggered.
+#JOYSTICK_THROTTLE_DIR = -1.0         # use -1.0 to flip forward/backward, use 1.0 to use joystick's natural forward/backward
 # USE_FPV = False                     # send camera data to FPV webserver
-JOYSTICK_DEVICE_FILE = "/dev/input/js0" # this is the unix file use to access the joystick.
+#JOYSTICK_DEVICE_FILE = "/dev/input/js0" # this is the unix file use to access the joystick.
 #
 # #For the categorical model, this limits the upper bound of the learned throttle
 # #it's very IMPORTANT that this value is matched from the training PC config.py and the robot.py
@@ -698,10 +696,10 @@ JOYSTICK_DEVICE_FILE = "/dev/input/js0" # this is the unix file use to access th
 # #This enables that, and sets the path to the simualator and the environment.
 # #You will want to download the simulator binary from: https://github.com/tawnkramer/donkey_gym/releases/download/v18.9/DonkeySimLinux.zip
 # #then extract that and modify DONKEY_SIM_PATH.
-# DONKEY_GYM = False
-# DONKEY_SIM_PATH = "path to sim" #"/home/tkramer/projects/sdsandbox/sdsim/build/DonkeySimLinux/donkey_sim.x86_64" when racing on virtual-race-league use "remote", or user "remote" when you want to start the sim manually first.
-# DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0" # ("donkey-generated-track-v0"|"donkey-generated-roads-v0"|"donkey-warehouse-v0"|"donkey-avc-sparkfun-v0")
-# GYM_CONF = { "body_style" : "donkey", "body_rgb" : (128, 128, 128), "car_name" : "car", "font_size" : 100} # body style(donkey|bare|car01) body rgb 0-255
+DONKEY_GYM = True
+DONKEY_SIM_PATH = "/home/wyx/DonkeySimLinux/donkey_sim.x86_64" #"/home/tkramer/projects/sdsandbox/sdsim/build/DonkeySimLinux/donkey_sim.x86_64" when racing on virtual-race-league use "remote", or user "remote" when you want to start the sim manually first.
+DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0" # ("donkey-generated-track-v0"|"donkey-generated-roads-v0"|"donkey-warehouse-v0"|"donkey-avc-sparkfun-v0")
+GYM_CONF = { "body_style" : "donkey", "body_rgb" : (128, 128, 128), "car_name" : "car", "font_size" : 100} # body style(donkey|bare|car01) body rgb 0-255
 # GYM_CONF["racer_name"] = "Your Name"
 # GYM_CONF["country"] = "Place"
 # GYM_CONF["bio"] = "I race robots."
@@ -774,4 +772,4 @@ TILT_DOWN_PWM = 500           # 垂直向下的 PWM 值
 
 # 舵机中位值（默认位置）
 PAN_STEERING_NEUTRAL = 350    # 水平中位 PWM
-TILT_STEERING_NEUTRAL = 350   # 垂直中位 PWM
+TILT_STEERING_NEUTRAL = 350   # 垂直中位 PWM/
